@@ -1,0 +1,2 @@
+params,train_accuracy,train_precision,train_f1,train_recall,test_accuracy,test_precision,test_f1,test_recall,test_mcc,test_cm,overfitting_ratio
+"{'n_neighbors': 3, 'leaf_size': 24, 'algorithm': 'ball_tree', 'metric': 'minkowski'}",0.937615317667537,0.9235095007347016,0.9386091941737368,0.9542382328714094,0.9383478190236374,0.9389920424403183,0.9300955414012739,0.9480603798084727,0.8768572883339041,"[[5711, 439], [320, 5841]]",0.9935258797540035
