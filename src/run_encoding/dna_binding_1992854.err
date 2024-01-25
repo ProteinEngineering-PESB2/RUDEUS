@@ -1,14 +1,0 @@
-Assigning embeddings: 0it [00:00, ?it/s]Assigning embeddings: 2it [00:00, 14.13it/s]
-Traceback (most recent call last):
-  File "/home/dmedina/dna_binding/src/coding_strategies/coding_pretrained_without_reduced.py", line 81, in <module>
-    encoded_df = bio_embeddings.apply_model(dict_elements[element][0], dict_elements[element][1])
-  File "/home/dmedina/dna_binding/src/coding_strategies/coding_pretrained_without_reduced.py", line 47, in apply_model
-    self.__non_reducing()
-  File "/home/dmedina/dna_binding/src/coding_strategies/coding_pretrained_without_reduced.py", line 32, in __non_reducing
-    embed = np.pad(embed, ((0, max_length - len(embed)), (0, 0)), 'constant')
-  File "<__array_function__ internals>", line 180, in pad
-  File "/home/dmedina/.conda/envs/encoder_proteins/lib/python3.9/site-packages/numpy/lib/arraypad.py", line 743, in pad
-    pad_width = _as_pairs(pad_width, array.ndim, as_index=True)
-  File "/home/dmedina/.conda/envs/encoder_proteins/lib/python3.9/site-packages/numpy/lib/arraypad.py", line 514, in _as_pairs
-    raise ValueError("index can't contain negative values")
-ValueError: index can't contain negative values
