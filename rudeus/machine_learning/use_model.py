@@ -13,21 +13,16 @@
 # 3 Departamento de Química, Universidad de Magallanes, Av. Pdte. Manuel Bulnes 01855, Punta Arenas, Chile.
 # *Corresponding author
 
-
-
-from imblearn.under_sampling import RandomUnderSampler
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
-def random_under_sampling_split(X, y, random_state = None):
-    """Get a balanced random sample of data and splits it into training and testing datasets."""
-    if random_state is not None:
-        rus = RandomUnderSampler(random_state = random_state)
-    else:
-        rus = RandomUnderSampler()
-    X, y = rus.fit_resample(X, y)
-    return train_test_split(X, y, random_state=1)
-
-def binarize_target(y):
-    """Binarize target"""
-    encoder = LabelEncoder()
-    return encoder.fit_transform(y)
+"""Use joblib saved model"""
+import joblib
+import warnings
+warnings.filterwarnings("ignore")
+class UseModel:
+    """Use joblib saved model"""
+    def __init__(self, joblib_path, dataset):
+        self.joblib_path = joblib_path
+        self.dataset = dataset
+    def predict(self):
+        model = joblib.load(self.joblib_path)
+        prediction = model.predict(self.dataset)
+        return prediction
