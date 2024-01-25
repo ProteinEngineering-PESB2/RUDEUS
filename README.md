@@ -73,6 +73,8 @@ To emulate the generated environment you can run in the command line:
 
 *NOTE*: change "name_environment" as your convenience
 
+The datasets, raw and encoded, and selected models are located on this [drive](https://drive.google.com/drive/folders/1pv06CcAwu8BIogZBu4DPaSx1xBptI82d?usp=sharing) folder. It's mandatory to download it if you want to reproduce this work using available notebooks. 
+
 <a name="datasets"></a>
 
 ## Datasets
@@ -81,12 +83,12 @@ In this work, we used two datasets available in literature for training the clas
 
 ### DNA binding proteins
 
-Dataset with protein sequences classified as a DNA-Binding protein (20518 examples) and non-DNA-Binding protein (26982 examples). The dataset was generated collecting the information in [1, 2](#dm_cite).
+Dataset with protein sequences classified as a DNA-Binding protein (20518 examples) and non-DNA-Binding protein (26982 examples). The dataset was generated collecting the information in [[1, 2]](#dm_cite).
 
 
 ### Single/Double stranded DNA binding proteins
 
-Dataset with protein sequences classified as a DNA single stranded binding protein (268 examples) and DNA double stranded binding protein (965 examples). The dataset was generated collecting the information in [3, 4](#dm_cite).
+Dataset with protein sequences classified as a DNA single stranded binding protein (268 examples) and DNA double stranded binding protein (965 examples). The dataset was generated collecting the information in [[3, 4]](#dm_cite).
 
 
 <a name="training"></a>
