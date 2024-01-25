@@ -29,10 +29,10 @@ class Docking:
         if self.n_cores is None:
             self.n_cores = 1
 
-    def execute_lightdock(self, steps):
+    def execute_lightdock(self, steps, swarms, glowworms):
         current_path = os.path.realpath(__file__)
         os.chdir(os.path.dirname(self.protein_pdb_path))
-        command = f"lightdock3_setup.py {os.path.basename(self.protein_pdb_path)} {os.path.basename(self.dna_pdb_path)} -s 10"
+        command = f"lightdock3_setup.py {os.path.basename(self.protein_pdb_path)} {os.path.basename(self.dna_pdb_path)} -s {swarms}"
         os.system(command)
         swarm_folders = [file for file in os.listdir() if "swarm" in file]
         self.count_swarm = len(swarm_folders)
@@ -40,7 +40,7 @@ class Docking:
         os.system(command)
         for folder in swarm_folders:
             if len(os.listdir()) != 0:
-                command = f'echo "cd {folder}; lgd_generate_conformations.py ../{os.path.basename(self.protein_pdb_path)} ../{os.path.basename(self.dna_pdb_path)}  gso_{steps}.out 200 > /dev/null 2> /dev/null;" >> generate_lightdock.list;'
+                command = f'echo "cd {folder}; lgd_generate_conformations.py ../{os.path.basename(self.protein_pdb_path)} ../{os.path.basename(self.dna_pdb_path)}  gso_{steps}.out {glowworms} > /dev/null 2> /dev/null;" >> generate_lightdock.list;'
                 os.system(command)
                 command = f'echo "cd {folder}; lgd_cluster_bsas.py gso_{steps}.out > /dev/null 2> /dev/null;" >> cluster_lightdock.list;'
                 os.system(command)
