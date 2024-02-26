@@ -2,9 +2,9 @@
 
 This repository contains the source files and supplementary information for the implementations and use cases presented in the work:
 
-David Medina-Ortiz<sup>1,2∗</sup>, Iván Moya-Barría<sup>1,3</sup>, Gabriel Cabas-Mora<sup>1</sup>, Nicole Soto-García<sup>1</sup>, Roberto Uribe-Paredes<sup>1</sup>. <br>
+David Medina-Ortiz<sup>1,2∗</sup>, Gabriel Cabas-Mora<sup>1</sup>, Iván Moya-Barría<sup>1,3</sup>, Nicole Soto-García<sup>1</sup>, Roberto Uribe-Paredes<sup>1</sup>. <br>
 RUDEUS, a machine learning classification system for DNA-Binding protein identification. <br>
-https://doi.org/XXXX<br>
+[https://doi.org/10.1101/2024.02.19.580825](https://www.biorxiv.org/content/10.1101/2024.02.19.580825v1)<br>
 
 
 <sup>*1*</sup><sub>Departamento de Ingeniería En Computación, Universidad de Magallanes, Avenida Bulnes 01855, Punta Arenas, Chile.</sub> <br>
