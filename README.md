@@ -73,7 +73,7 @@ To emulate the generated environment you can run in the command line:
 
 *NOTE*: change "name_environment" as your convenience
 
-The datasets, raw and encoded, and selected models are located on this [drive](https://drive.google.com/drive/folders/1pv06CcAwu8BIogZBu4DPaSx1xBptI82d?usp=sharing) folder. It's mandatory to download it if you want to reproduce this work using available notebooks. 
+The datasets, raw and encoded, and selected models are located on this [One drive](https://umagcl-my.sharepoint.com/:f:/g/personal/nicole_soto_funcionarios_umag_cl/Epw3KKnLn1hHhqc6E5jKs3kBLtJ0kaRXK6B-APGU4hS5sQ?e=xSu8gw) folder. It's mandatory to download it if you want to reproduce this work using available notebooks. 
 
 <a name="datasets"></a>
 
