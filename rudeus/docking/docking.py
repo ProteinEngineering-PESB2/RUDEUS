@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-# Created on 25 01 2024
-# @authors: Gabriel Cabas Mora
-# @contact: <gabriel.cabas@umag.cl>
-# RUDEUS, a machine learning classification system for DNA-Binding protein identification.
-# Released under MIT License
 
 # RUDEUS, a machine learning classification system for DNA-Binding protein identification.
 # David Medina-Ortiz 1,2∗, Iván Moya-Barría 1,3, Gabriel Cabas-Mora 1, Nicole Soto-García 1, Roberto Uribe-Paredes 1.
@@ -21,9 +16,10 @@ Use lightdock to produce a docking for protein-dna interaction.
 import os
 class Docking:
     """Preprocess a pdb for amber"""
-    def __init__(self, protein_pdb_path, dna_pdb_path, n_cores = None):
+    def __init__(self, protein_pdb_path, dna_pdb_path, restricted = None, n_cores = None):
         self.protein_pdb_path = protein_pdb_path
         self.dna_pdb_path = dna_pdb_path
+        self.restricted = restricted
         self.count_swarm = None
         self.n_cores = n_cores
         if self.n_cores is None:
@@ -32,11 +28,16 @@ class Docking:
     def execute_lightdock(self, steps, swarms, glowworms):
         current_path = os.path.realpath(__file__)
         os.chdir(os.path.dirname(self.protein_pdb_path))
-        command = f"lightdock3_setup.py {os.path.basename(self.protein_pdb_path)} {os.path.basename(self.dna_pdb_path)} -s {swarms}"
+
+        if self.restricted == True:
+            command = f"lightdock3_setup.py {os.path.basename(self.protein_pdb_path)} {os.path.basename(self.dna_pdb_path)} -s {swarms} -noxt --rst restraints.list"
+        else:
+            command = f"lightdock3_setup.py {os.path.basename(self.protein_pdb_path)} {os.path.basename(self.dna_pdb_path)} -s {swarms} -noxt"
         os.system(command)
+        
         swarm_folders = [file for file in os.listdir() if "swarm" in file]
         self.count_swarm = len(swarm_folders)
-        command = f"lightdock3.py setup.json {steps} -s dna -c {self.n_cores}"
+        command = f"lightdock3.py setup.json {steps} --scoring_function dna -c {self.n_cores}"
         os.system(command)
         for folder in swarm_folders:
             if len(os.listdir()) != 0:

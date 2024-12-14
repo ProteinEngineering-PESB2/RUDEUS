@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
 # -- coding: utf-8 --
-# Created on 25 01 2024
-# @authors: Gabriel Cabas Mora
-# @contact: <gabriel.cabas@umag.cl>
-# RUDEUS, a machine learning classification system for DNA-Binding protein identification.
-# Released under MIT License
 
 # RUDEUS, a machine learning classification system for DNA-Binding protein identification.
 # David Medina-Ortiz 1,2∗, Iván Moya-Barría 1,3, Gabriel Cabas-Mora 1, Nicole Soto-García 1, Roberto Uribe-Paredes 1.
@@ -43,10 +38,6 @@ class Preprocessing:
         if self.output_folder is None:
             self.output_folder = os.path.dirname(self.protein_pdb_path) + "/output"
         os.makedirs(self.output_folder, exist_ok=True)
-
-    def __import_structure(self, path):
-        parser = PDBParser()
-        return parser.get_structure(id=os.path.basename(path).replace(".pdb", ""), file=path)
     
     def __protonize(self, pdb_path):
         pdb_without_protons_path = self.output_folder + "/" + os.path.basename(pdb_path).replace('.pdb', '_noh.pdb')
@@ -55,30 +46,12 @@ class Preprocessing:
         os.system(f"reduce -BUILD {pdb_without_protons_path} > {pdb_with_protons_path}")
         return pdb_with_protons_path
 
-    def __rename_atoms(self, structure):
-        for chain in structure.get_chains():
-            for res in chain.get_residues():
-                if res.get_resname() in self.conflict_residues:
-                    for atom in res.get_atoms():
-                        res_name = res.get_resname()
-                        atom_name = atom.get_name()
-                        if f"{res_name}-{atom_name}" in self.amber_keys:
-                            atom.name = amber_types[f"{res_name}-{atom_name}"]
-                        elif atom_name in amber_types.values():
-                            pass
-                        else:
-                            if res_name in self.protein_residues:
-                                res.detach_child(atom.id)
-                else:
-                    for atom in res.get_atoms():
-                        res.detach_child(atom.id)
-        return structure
+    def __rename_atoms(self, pdb_path):
+        pdb_non_rename_path = pdb_path
+        pdb_rename_path = self.output_folder + "/" + os.path.basename(pdb_path).replace('.pdb', '_renumber.pdb')
 
-    def __reindex_residues(self, structure):
-        for chain in structure.get_chains():
-            for index, res in enumerate(chain.get_residues()):
-                res.id = (res.id[0], index + 1, res.id[2])
-        return structure
+        os.system(f"pdb_reatom {pdb_non_rename_path} > {pdb_rename_path}")
+        return pdb_rename_path
 
     def __format_atom_name(self,atom_name):
         """Format ATOM name with correct padding"""
@@ -133,22 +106,12 @@ class Preprocessing:
                                 self.write_atom_line(atom, oh)
         return output_path
 
-
-    def __export_structure(self, structure, path):
-        io=PDBIO()
-        io.set_structure(structure)
-        io.save(path)
-
     def run(self):
         """Runs preprocessing pipeline"""
         self.protein_pdb_path = self.__protonize(self.protein_pdb_path)
         self.dna_pdb_path = self.__protonize(self.dna_pdb_path)
-        self.protein_structure = self.__import_structure(self.protein_pdb_path)
-        self.protein_structure = self.__rename_atoms(self.protein_structure)
-        self.protein_structure = self.__reindex_residues(self.protein_structure)
-        self.__export_structure(self.protein_structure, self.protein_pdb_path.replace(".pdb", "_final.pdb"))
+        self.protein_structure = self.__rename_atoms(self.protein_pdb_path)
+        self.dna_pdb_path = self.__rename_atoms(self.dna_pdb_path)
         self.dna_pdb_path = self.__reduce_amber(self.dna_pdb_path)
-        self.dna_structure = self.__import_structure(self.dna_pdb_path)
-        self.dna_structure = self.__reindex_residues(self.dna_structure)
-        self.__export_structure(self.protein_structure, self.dna_pdb_path.replace(".pdb", "_final.pdb"))
+
         return self.protein_structure, self.dna_pdb_path
